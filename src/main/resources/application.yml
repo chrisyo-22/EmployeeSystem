@@ -1,0 +1,36 @@
+# Propority Level:
+# 1 Application.properties 2.yml, 3.yaml
+server:
+  port: 8080
+
+spring:
+  application:
+    name: EmployeeManagementSystem
+  #config for database auth
+  datasource:
+    url: jdbc:mysql://localhost:3306/employeesystem
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: chris
+  servlet:
+    #Set maximum file size
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+mybatis:
+  configuration:
+    #配置SQL日志打印在控制台
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #开启驼峰命名规则映射 例子：abc_xyz --> abcXyz
+    map-underscore-to-camel-case: true
+
+#Open debug for Transactional logging
+logging:
+  level:
+    org.springframework.jdbc.support.JdbcTransactionManager: debug
+
+aws:
+  s3:
+    bucketName: amz-chris-yo-22-wode-mingzi-hello-world
+    region: us-east-1
