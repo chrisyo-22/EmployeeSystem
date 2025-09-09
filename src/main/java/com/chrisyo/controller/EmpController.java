@@ -40,6 +40,21 @@ public class EmpController {
         return Result.success();
     }
 
+    @GetMapping("/{id}")
+    public Result getById(@PathVariable Integer id){
+        log.info("Getting employee with id:{} ", id);
+        Employee emp = empService.getEmpById(id);
+        return Result.success(emp);
+    }
+
+
+    @PutMapping
+    public Result update(@RequestBody Employee employee){
+        log.info("Updating employee: {}", employee);
+        empService.update(employee);
+        return Result.success();
+    }
+
 
 
     //    public Result page(@RequestParam(defaultValue = "1")

@@ -1,11 +1,9 @@
 package com.chrisyo.mapper;
 
+import com.chrisyo.entity.EmpExpr;
 import com.chrisyo.entity.EmpQueryParam;
 import com.chrisyo.entity.Employee;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -31,16 +29,25 @@ public interface EmpMapper {
 
     //Used pageHelper plugging
     List<Employee> list(EmpQueryParam empQueryParam);
-
     //    @Insert("insert into emp values(null, #{username}, #{password}, #{name}," +
-//            "#{gender}, #{phone}, #{job},#{salary}, #{image}," +
-//            " #{entryDate},#{deptId}, #{createTime}, #{updateTime})")
-//    @Options(useGeneratedKeys = true, keyProperty = "id")
+    //            "#{gender}, #{phone}, #{job},#{salary}, #{image}," +
+    //            " #{entryDate},#{deptId}, #{createTime}, #{updateTime})")
+    //    @Options(useGeneratedKeys = true, keyProperty = "id")
     //if you used Annotation here, you can't use XML
     void insert(Employee emp);
 
-    @Delete("delete from emp where id in (${ids})")
-    void delete(Integer[] ids);
+    //Dynamic SQL (XML)
+    void deleteBatch(List<Integer> ids);
 
+    Employee getEmpById(Integer id);
+
+    @Select("select * from emp where id = #{id}")
+    Employee getEmpByIdWithoutExpr(Integer id);
+
+    @Select("select * from emp_expr where emp_id = #{id}")
+    List<EmpExpr> getExpExprById(Integer id);
+
+    //Dynamic SQL in case of setting fields to empty
+    void update(Employee employee);
 }
 

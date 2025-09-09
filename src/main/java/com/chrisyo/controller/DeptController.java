@@ -51,7 +51,13 @@ public class DeptController {
      */
     @PostMapping
     public Result create(@RequestBody Dept dept){
-        Dept new_dept = deptService.add(dept);
+        Dept new_dept = null;
+        try {
+            new_dept = deptService.add(dept);
+        } catch (Exception e) {
+            return Result.error("Failed to create new department: " + dept.getName());
+
+        }
         return Result.success(new_dept);
     }
 

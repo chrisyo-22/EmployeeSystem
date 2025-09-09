@@ -18,4 +18,8 @@ public interface EmpService {
     void create(Employee employee);
 
     void delete(List<Integer> ids);
+
+    Employee getEmpById(Integer id);
+
+    void update(Employee employee);
 }

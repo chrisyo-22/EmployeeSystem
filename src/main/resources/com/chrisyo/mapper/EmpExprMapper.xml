@@ -10,4 +10,16 @@
     </insert>
 
 
+    <delete id="deleteBatch">
+        delete from emp_expr where emp_id in
+        <foreach collection="empIds" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByEmpId">
+        delete from emp_expr where emp_id = #{id}
+    </delete>
+
+
 </mapper>

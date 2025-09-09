@@ -17,6 +17,8 @@ import org.springframework.util.CollectionUtils;
 import com.chrisyo.mapper.EmpExprMapper;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -59,8 +61,8 @@ public class EmpServiceImpl implements EmpService {
 
         //Retrieve a pre-signed file link from S3
         empList.forEach(emp -> {
-            String presignUrl = awsS3Utils.createPresignedGetUrl( emp.getImage());
-           emp.setImage(presignUrl);
+            String presignUrl = awsS3Utils.createPresignedGetUrl(emp.getImage());
+            emp.setImage(presignUrl);
         });
 
         Page<Employee> p = (Page<Employee>) empList; //Type casting the Page<Employee>object, it inherent ArrayList
@@ -94,6 +96,57 @@ public class EmpServiceImpl implements EmpService {
         }
 
 
+    }
+
+    @Transactional
+    @Override
+    public void delete(List<Integer> ids) {
+        //1. Delete employee from emp table
+        empMapper.deleteBatch(ids);
+
+        //2. delete employee's experience(expr table)
+        empExprMapper.deleteBatch(ids);
+    }
+
+    @Override
+    public Employee getEmpById(Integer id) {
+        return empMapper.getEmpById(id);
+    }
+
+
+    //    @Override
+    public Employee getEmpByIdV2(Integer id) {
+        //1. query employee
+        Employee employee = empMapper.getEmpByIdWithoutExpr(id);
+        //2. query employee experiences
+        List<EmpExpr> expr = empMapper.getExpExprById(id);
+        //3. combine and return
+        employee.setExprList(expr);
+        return employee;
+    }
+
+
+    @Transactional
+    @Override
+    public void update(Employee employee) {
+
+        //1. Update employee basic info
+        //1.1 Update the time of modification
+        employee.setUpdateTime(LocalDateTime.now());
+        empMapper.update(employee);
+
+        //2. Delete the expr from the emp-expr table and add new ones (Delete first then add)
+        //This is because the frontend supports modification, deletion, and addition.
+        //It would be much simpler to just overwrite everything
+        empExprMapper.deleteByEmpId(employee.getId());
+        List<EmpExpr> exprList = employee.getExprList();
+        //If not empty
+        if (!CollectionUtils.isEmpty(exprList)) {
+            exprList.forEach(expr -> {
+                expr.setEmpId(employee.getId());
+            });
+            empExprMapper.insertBatch(exprList);
+        }
     }
 
 
