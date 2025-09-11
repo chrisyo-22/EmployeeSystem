@@ -14,6 +14,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/class")
 @RestController
+@ControllerAdvice
 public class ClassController {
 
     @Autowired
@@ -27,10 +28,10 @@ public class ClassController {
     }
 
 
-    @DeleteMapping
-    public Result delete(@RequestParam List<Integer> ids) {
-        log.info("delete class with ids: {}", ids);
-        classService.delete(ids);
+    @DeleteMapping("/{id}")
+    public Result delete(@PathVariable Integer id) {
+        log.info("delete class with id: {}", id);
+        classService.delete(id);
         return Result.success();
     }
 
@@ -41,21 +42,21 @@ public class ClassController {
         return Result.success();
     }
 
-    @GetMapping
-    public Result getClassById(Integer id) {
+    @GetMapping("/{id}")
+    public Result getClassById(@PathVariable Integer id) {
         log.info("query class by id: {}", id);
         Class res = classService.getClassById(id);
         return Result.success(res);
     }
 
     @PutMapping
-    public Result update(Class classObj) {
+    public Result update(@RequestBody Class classObj) {
         log.info("updating class: {}", classObj.toString().replace("\n", ""));
         classService.update(classObj);
         return Result.success();
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public Result getAll() {
         log.info("Query all classes");
         List<Class> res = classService.getAll();

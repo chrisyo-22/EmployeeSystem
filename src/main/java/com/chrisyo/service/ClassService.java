@@ -12,7 +12,7 @@ public interface ClassService {
 
     PageBean page(ClassQueryParam classQueryParam);
 
-    void delete(List<Integer> ids);
+    void delete(Integer id);
 
     void add(Class classObj);
 
