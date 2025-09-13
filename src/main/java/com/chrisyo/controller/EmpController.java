@@ -8,6 +8,7 @@ import com.chrisyo.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Slf4j
@@ -26,7 +27,7 @@ public class EmpController {
     }
 
     @PostMapping
-    public Result create(@RequestBody Employee employee){
+    public Result create(@RequestBody Employee employee) {
         log.info("Creating new employee: {}", employee);
         empService.create(employee);
         return Result.success();
@@ -34,14 +35,14 @@ public class EmpController {
 
     @DeleteMapping
     //Another way: delete Integer[] ids, below is via Collection
-    public Result delete(@RequestParam List<Integer> ids){
+    public Result delete(@RequestParam List<Integer> ids) {
         log.info("Deleting employee with id:{} ", ids);
         empService.delete(ids);
         return Result.success();
     }
 
     @GetMapping("/{id}")
-    public Result getById(@PathVariable Integer id){
+    public Result getById(@PathVariable Integer id) {
         log.info("Getting employee with id:{} ", id);
         Employee emp = empService.getEmpById(id);
         return Result.success(emp);
@@ -49,12 +50,11 @@ public class EmpController {
 
 
     @PutMapping
-    public Result update(@RequestBody Employee employee){
+    public Result update(@RequestBody Employee employee) {
         log.info("Updating employee: {}", employee);
         empService.update(employee);
         return Result.success();
     }
-
 
 
     //    public Result page(@RequestParam(defaultValue = "1")

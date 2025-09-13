@@ -28,16 +28,14 @@ public class ClassServiceImpl implements ClassService {
         List<Class> classes = classMapper.list(classQueryParam);
 
         //Fill the class's status based on the begin_date and end_date
-        classes.forEach(c ->{
-           if(c.getBeginDate().isAfter(LocalDate.now())){
-               c.setStatus("Not Active");
-           }
-           else if(c.getEndDate().isAfter(LocalDate.now())){
-               c.setStatus("Active");
-           }
-           else{
-               c.setStatus("Expired");
-           }
+        classes.forEach(c -> {
+            if (c.getBeginDate().isAfter(LocalDate.now())) {
+                c.setStatus("Not Active");
+            } else if (c.getEndDate().isAfter(LocalDate.now())) {
+                c.setStatus("Active");
+            } else {
+                c.setStatus("Expired");
+            }
         });
         Page<Class> p = (Page<Class>) classes;
         return new PageBean(p.getTotal(), p.getResult());

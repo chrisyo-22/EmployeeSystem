@@ -16,4 +16,8 @@ public interface StudentMapper {
     Student getById(Integer id);
 
     void add(Student stuObj);
+
+    void update(Student stuObj);
+
+    void updateViolation(Integer id, Integer score);
 }

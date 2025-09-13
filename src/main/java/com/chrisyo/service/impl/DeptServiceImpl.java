@@ -72,7 +72,7 @@ public class DeptServiceImpl implements DeptService {
             log.info("Successfully added new department: {} with id: {}", dept.getName(), dept.getId());
             return dept;
         } catch (Exception e) {
-            log.error("Error occurred while adding department: {}",  dept.getName());
+            log.error("Error occurred while adding department: {}", dept.getName());
             throw e;
         }
     }

@@ -18,7 +18,6 @@ import software.amazon.awssdk.transfer.s3.progress.LoggingTransferListener;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.util.Map;
-import java.util.UUID;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -113,7 +112,6 @@ public class AwsS3Utils {
                 Transfer complete!
         */
     }
-
 
     /* Create a pre-signed URL to download an object in a subsequent GET request. */
     public String createPresignedGetUrl(String keyName) {

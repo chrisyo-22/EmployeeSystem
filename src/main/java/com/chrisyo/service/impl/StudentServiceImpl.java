@@ -50,11 +50,15 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void update(Student stuObj) {
+        stuObj.setUpdateTime(LocalDateTime.now());
+        studentMapper.update(stuObj);
 
     }
 
     @Override
     public void updateViolation(Integer id, Integer score) {
+        studentMapper.updateViolation(id, score);
+
 
     }
 

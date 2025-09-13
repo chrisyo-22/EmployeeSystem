@@ -8,8 +8,8 @@
             <if test="name !=null and name != ''">
                 s.name like concat('%', #{name}, '%')
             </if>
-            <if test="degree != null"> and s.degree = #{degree}</if>
-            <if test="classId != null"> and s.class_Id = #{classId}</if>
+            <if test="degree != null">and s.degree = #{degree}</if>
+            <if test="classId != null">and s.class_Id = #{classId}</if>
         </where>
     </select>
 
@@ -21,10 +21,43 @@
     </delete>
 
     <select id="getById" resultType="com.chrisyo.entity.Student">
-        select * from student where id = #{id}
+        select *
+        from student
+        where id = #{id}
     </select>
 
     <insert id="add">
-        insert into student values(null, #{name}, #{no}, #{gender}, #{phone}, #{idCard}, #{isCollege}, #{address}, #{degree}, #{graduationDate}, #{classId}, #{violationCount}, #{violationScore}, #{createTime}, #{updateTime})
+        insert into student
+        values (null, #{name}, #{no}, #{gender}, #{phone}, #{idCard}, #{isCollege}, #{address}, #{degree},
+                #{graduationDate}, #{classId}, #{violationCount}, #{violationScore}, #{createTime}, #{updateTime})
     </insert>
+
+    <update id="update">
+        update student
+        <set>
+            <if test="name != null and name !=''">name=#{name},</if>
+            <if test="no != null and no !=''">no=#{no},</if>
+            <if test="phone != null and phone !=''">phone = #{phone},</if>
+            <if test="gender !=null and gender != ''">gender=#{gender},</if>
+            <if test="degree!= null">degree = #{degree},</if>
+            <if test="idCard !=null and idCard !=''">id_card =#{idCard},</if>
+            <if test="isCollege != null">is_college = #{isCollege},</if>
+            <if test="address != null and address!=''">address = #{address},</if>
+            <if test="graduationDate != null">graduation_date = #{graduationDate},</if>
+            <if test="address != null and address!=''">address = #{address},</if>
+            <if test="violationCount != null">violation_count = #{violationCount},</if>
+            <if test="violationScore != null">violation_score = #{violationScore},</if>
+            <if test="classId != null">class_id = #{classId},</if>
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateViolation">
+        update student
+        <set>
+            violation_count = violation_count + 1,
+            violation_score = #{score}
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

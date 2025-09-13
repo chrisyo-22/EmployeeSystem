@@ -31,35 +31,35 @@ public class StudentController {
 
 
     @DeleteMapping("/{ids}")
-    public Result delete(@PathVariable List<Integer> ids){
+    public Result delete(@PathVariable List<Integer> ids) {
         log.info("Deleting student with id: {}", ids);
         studentService.delete(ids);
         return Result.success("successfully deleted student with id: " + ids);
     }
 
     @PostMapping
-    public Result add(@RequestBody Student stuObj){
+    public Result add(@RequestBody Student stuObj) {
         log.info("Adding student: {}", stuObj.toString().replace("\n", ""));
         studentService.add(stuObj);
         return Result.success("successfully added student: " + stuObj.toString());
     }
 
     @GetMapping("/{id}")
-    public Result getById(@PathVariable Integer id){
+    public Result getById(@PathVariable Integer id) {
         log.info("Querying Student with id: {}", id);
         Student queryStudent = studentService.getById(id);
         return Result.success(queryStudent);
     }
 
     @PutMapping
-    public Result put(@RequestBody Student stuObj){
+    public Result put(@RequestBody Student stuObj) {
         log.info("updating student: {}", stuObj.toString().replace("\n", ""));
         studentService.update(stuObj);
         return Result.success("successfully updated student: " + stuObj.toString());
     }
 
-    @PostMapping("/violation/{id}/{score}")
-    public Result violationRecord(@PathVariable Integer id, @PathVariable Integer score){
+    @PutMapping("/violation/{id}/{score}")
+    public Result violationRecord(@PathVariable Integer id, @PathVariable Integer score) {
         studentService.updateViolation(id, score);
         return Result.success("successfully updated student: " + id + " with score: " + score);
     }

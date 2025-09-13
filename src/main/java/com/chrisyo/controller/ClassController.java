@@ -27,7 +27,6 @@ public class ClassController {
         return Result.success(res);
     }
 
-
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         log.info("delete class with id: {}", id);

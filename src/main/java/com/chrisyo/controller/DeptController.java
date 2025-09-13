@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RequestMapping("/depts")
 @RestController // = Controller + ResponseBody
 //@Controller -> Generate Bean object, it's not equivalent to Component because Component cannot accept request
@@ -32,14 +33,12 @@ public class DeptController {
         return Result.success(depts); // directly return (will be converted to JSON by ResponseBody)
     }
 
-
     /**
      * Delete Department
-     *
      */
     @DeleteMapping
     //public Result delete(@RequestParam("id") Integer deptId) Mapping between id to deptId
-    public Result delete(Integer id){
+    public Result delete(Integer id) {
         deptService.delete(id);
         return Result.success();
     }
@@ -50,7 +49,7 @@ public class DeptController {
      * @return created department
      */
     @PostMapping
-    public Result create(@RequestBody Dept dept){
+    public Result create(@RequestBody Dept dept) {
         Dept new_dept = null;
         try {
             new_dept = deptService.add(dept);
@@ -63,10 +62,9 @@ public class DeptController {
 
     /**
      * Query a department
-     *
      */
     @GetMapping("/{id}")
-    public Result get(@PathVariable Integer id){
+    public Result get(@PathVariable Integer id) {
         Dept dept = deptService.getById(id);
         return Result.success(dept);
     }
@@ -75,11 +73,9 @@ public class DeptController {
      * Modify a department
      */
     @PutMapping
-    public Result update(@RequestBody Dept dept){
-        Dept updated= deptService.update(dept);
+    public Result update(@RequestBody Dept dept) {
+        Dept updated = deptService.update(dept);
         return Result.success(updated);
     }
-
-
 
 }

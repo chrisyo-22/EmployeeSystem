@@ -74,19 +74,20 @@ public class UploadController {
 
     /**
      * Get a presigned Put URL for Frontend to upload the file
+     *
      * @param metadata key-value pair such as content type:
-     * image/jpeg
-     * image/png
-     * image/gif
-     * image/webp
+     *                 image/jpeg
+     *                 image/png
+     *                 image/gif
+     *                 image/webp
      * @return presigned Put URL
      */
     @GetMapping("/uploads/presign")
-    public Result getPresignedUrl(Map<String, String> metadata){
+    public Result getPresignedUrl(Map<String, String> metadata) {
         log.info("Trying initializing presigned url");
         S3Image s3Image = new S3Image();
         s3Image.setKey(UUID.randomUUID().toString());
-        String url = awsS3Utils.createPresignedGetUrl(s3Image.getKey(),metadata);
+        String url = awsS3Utils.createPresignedGetUrl(s3Image.getKey(), metadata);
         s3Image.setShared_url(url);
         return Result.success(s3Image);
     }

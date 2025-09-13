@@ -78,7 +78,6 @@ public class EmpServiceImpl implements EmpService {
         employee.setUpdateTime(LocalDateTime.now());
         employee.setCreateTime(LocalDateTime.now());
 
-
         //1.2 invoke Mapper
         empMapper.insert(employee);
         Integer employeeId = employee.getId(); //auto inserted by Option Annotation
@@ -113,7 +112,6 @@ public class EmpServiceImpl implements EmpService {
         return empMapper.getEmpById(id);
     }
 
-
     //    @Override
     public Employee getEmpByIdV2(Integer id) {
         //1. query employee
@@ -124,7 +122,6 @@ public class EmpServiceImpl implements EmpService {
         employee.setExprList(expr);
         return employee;
     }
-
 
     @Transactional
     @Override
@@ -148,6 +145,4 @@ public class EmpServiceImpl implements EmpService {
             empExprMapper.insertBatch(exprList);
         }
     }
-
-
 }
