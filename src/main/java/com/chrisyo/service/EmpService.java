@@ -1,9 +1,6 @@
 package com.chrisyo.service;
 
-import com.chrisyo.entity.Dept;
-import com.chrisyo.entity.EmpQueryParam;
-import com.chrisyo.entity.Employee;
-import com.chrisyo.entity.PageBean;
+import com.chrisyo.entity.*;
 
 import java.util.List;
 
@@ -22,4 +19,6 @@ public interface EmpService {
     Employee getEmpById(Integer id);
 
     void update(Employee employee);
+
+    LoginInfo login(Employee emp);
 }

@@ -49,5 +49,7 @@ public interface EmpMapper {
 
     //Dynamic SQL in case of setting fields to empty
     void update(Employee employee);
+
+    Employee selectUsernameAndPwd(Employee emp);
 }
 

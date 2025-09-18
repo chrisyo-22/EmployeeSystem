@@ -101,4 +101,10 @@
         </set>
         where id = #{id}
     </update>
+
+
+    <select id="selectUsernameAndPwd" resultType="com.chrisyo.entity.Employee">
+        select * from emp where username = #{username} and password = #{password}
+
+    </select>
 </mapper>
