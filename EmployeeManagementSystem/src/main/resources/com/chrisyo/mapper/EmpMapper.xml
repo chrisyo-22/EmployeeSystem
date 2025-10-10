@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chrisyo.mapper.EmpMapper">
+
+
+
+    <!--    <select id="count" resultType="java.lang.Long">-->
+    <!--        select count(*) from emp-->
+    <!--    </select>-->
+
+    <select id="list" resultType="com.chrisyo.entity.Employee">
+        select e.id,
+        e.username,
+        e.password,
+        e.name,
+        e.gender,
+        e.phone,
+        e.job,
+        e.salary,
+        e.image,
+        e.entry_date,
+        e.dept_id,
+        e.create_time,
+        e.update_time,
+        d.id,
+        d.name,
+        d.create_time,
+        d.name deptName
+        from emp e left join dept d on dept_id = d.id
+        <where>
+            <if test="name != null and name != ''">
+                e.name like concat('%', #{name}, '%')
+            </if>
+            <if test="gender != null">
+                and e.gender = #{gender}
+            </if>
+            <if test="begin != null and end != null">
+                and e.entry_date between #{begin} and #{end}
+            </if>
+        </where>
+        order by e.update_time desc
+    </select>
+
+    <!--  AutoMapping: no need to write a result tag for each field again  -->
+    <resultMap id="empResultMap" type="com.chrisyo.entity.Employee" autoMapping="true">
+        <!--   Primary key mapping     -->
+        <id column="id" property="id"></id>
+        <!--   Use collection to encapsulate when it's a collection of data, suit for 1: Many     -->
+        <collection property="exprList" column="exprList" ofType="com.chrisyo.entity.EmpExpr">
+            <result column="ee_id" property="id"></result>
+            <result column="ee_emp_id" property="empId"></result>
+            <result column="ee_begin" property="begin"></result>
+            <result column="ee_end" property="end"></result>
+            <result column="ee_company" property="company"></result>
+            <result column="ee_job" property="job"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getEmpById" resultMap="empResultMap">
+        select e.*,
+               ee.id      ee_id,
+               ee.emp_id  ee_empId,
+               ee.begin   ee_begin,
+               ee.end     ee_end,
+               ee.company ee_company,
+               ee.job     ee_job
+        from emp e
+                 left join emp_expr ee on e.id = ee.emp_id
+        where e.id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into emp
+        values (null, #{username}, #{password}, #{name}, #{gender},
+                #{phone}, #{job}, #{salary}, #{image}, #{entryDate}, #{deptId}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--  "delete from emp where id in (1,2,3)"  -->
+    <delete id="deleteBatch">
+        delete from emp where id in
+        <foreach collection="ids" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update emp
+        <set>
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="job != null">job = #{job},</if>
+            <if test="salary != null">salary = #{salary},</if>
+            <if test="image != null and image != ''">image = #{image},</if>
+            <if test="entryDate != null">entry_date = #{entryDate},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <select id="selectUsernameAndPwd" resultType="com.chrisyo.entity.Employee">
+        select * from emp where username = #{username} and password = #{password}
+
+    </select>
+</mapper>

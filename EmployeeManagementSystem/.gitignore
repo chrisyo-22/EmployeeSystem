@@ -1,0 +1,51 @@
+# Build outputs
+target/
+build/
+out/
+bin/
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+.mvn/
+# Keep the wrapper JAR if you prefer; otherwise ignore the whole .mvn folder
+
+# Gradle (if present)
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and reports
+logs/
+*.log
+target/surefire-reports/
+target/failsafe-reports/
+test-output/
+
+# Coverage
+.jacoco/
+jacoco*.exec
+site/jacoco/
+
+# Temporary/cache
+tmp/
+temp/
+*.swp
+*.swo
+
+# Env/config (local)
+.env
+.env.*
+*.local

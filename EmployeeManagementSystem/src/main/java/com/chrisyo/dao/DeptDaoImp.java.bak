@@ -1,0 +1,19 @@
+package com.chrisyo.dao;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.stereotype.Repository;
+
+import java.io.InputStream;
+import java.util.List;
+
+@Repository //Mark this class is data access layer, equivlent to Component
+public class DeptDaoImpl implements DeptDao{
+    @Override
+    public List<String> list() {
+        //Load dept.txt from src
+        //Through class loader, get class path's resources.
+        InputStream input = this.getClass().getClassLoader().getResourceAsStream("dept.txt");
+        List<String> strings = IOUtils.readLines(input, "UTF-8");
+        return strings;
+    }
+}
