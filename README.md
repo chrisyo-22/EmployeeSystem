@@ -89,7 +89,7 @@ aws:
 ```
 
 
-AWS credentials are resolved by the default provider chain. For local development you can set:
+AWS credentials are resolved by the default provider chain. For local development set:
 ```shell script
 export AWS_REGION=<AWS_REGION>
 export AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID>
@@ -122,14 +122,3 @@ If the project targets a traditional servlet container, build the WAR and deploy
 ## Typical Endpoints
 - GET /employees?page=<n>&pageSize=<m> — Returns a PageBean with employee data; image fields contain pre‑signed URLs.
 - POST /employees — Creates an employee and associated experience entries in a single transaction.
-
-Note: Adjust actual paths to match your controller mappings.
-
-## Development Tips
-- Lombok: Ensure your IDE has the Lombok plugin enabled and annotation processing turned on.
-- S3 object keys: Store only keys in the database; the service will convert them to pre‑signed URLs on read.
-- Response headers: If you need specific download behavior (inline/attachment), configure response overrides when generating the pre‑signed URL in the S3 utility.
-- Database migrations: If you use migrations, keep them in src/main/resources/db and run them on startup (tooling optional).
-
-## License
-Add your chosen license here.
